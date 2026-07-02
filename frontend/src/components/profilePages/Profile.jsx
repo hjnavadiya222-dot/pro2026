@@ -5,7 +5,7 @@ import { Navbar } from "../pages/Navbar";
 import { Button } from "../ui/button";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { User, Phone, Building2, GraduationCap } from "lucide-react";
+import { User, Phone, Building2, GraduationCap, Award, Briefcase, Layers, BookOpen } from "lucide-react";
 
 export default function Profile() {
   const { user } = useSelector((state) => state.auth);
@@ -84,17 +84,108 @@ export default function Profile() {
               </CardTitle>
             </CardHeader>
             <CardContent className="p-8">
-                  {user.role === "Student" && (
+              <div className="grid md:grid-cols-2 gap-6">
+                {/* Common fields */}
+                <div className="flex items-center gap-4">
+                  <div className="p-3 rounded-lg bg-emerald-500/10">
+                    <Building2 className="h-6 w-6 text-emerald-400" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-zinc-400">Department</p>
+                    <p className="text-zinc-100 font-medium">{user.department || "Not specified"}</p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-4">
+                  <div className="p-3 rounded-lg bg-emerald-500/10">
+                    <Phone className="h-6 w-6 text-emerald-400" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-zinc-400">Phone Number</p>
+                    <p className="text-zinc-100 font-medium">{user.phoneNumber || "Not specified"}</p>
+                  </div>
+                </div>
+
+                {/* Student specific */}
+                {user.role === "Student" && (
+                  <div className="flex items-center gap-4">
+                    <div className="p-3 rounded-lg bg-emerald-500/10">
+                      <GraduationCap className="h-6 w-6 text-emerald-400" />
+                    </div>
+                    <div>
+                      <p className="text-sm text-zinc-400">Semester</p>
+                      <p className="text-zinc-100 font-medium">{user.semester || "Not specified"}</p>
+                    </div>
+                  </div>
+                )}
+
+                {/* Faculty specific */}
+                {user.role === "Faculty" && (
+                  <>
                     <div className="flex items-center gap-4">
                       <div className="p-3 rounded-lg bg-emerald-500/10">
                         <GraduationCap className="h-6 w-6 text-emerald-400" />
                       </div>
                       <div>
-                        <p className="text-sm text-zinc-400">Semester</p>
-                        <p className="text-zinc-100 font-medium">{user.semester || 'Not specified'}</p>
+                        <p className="text-sm text-zinc-400">Designation</p>
+                        <p className="text-zinc-100 font-medium">{user.designation || "Not specified"}</p>
                       </div>
                     </div>
-                  )}
+
+                    <div className="flex items-center gap-4">
+                      <div className="p-3 rounded-lg bg-emerald-500/10">
+                        <Award className="h-6 w-6 text-emerald-400" />
+                      </div>
+                      <div>
+                        <p className="text-sm text-zinc-400">Qualification</p>
+                        <p className="text-zinc-100 font-medium">{user.qualification || "Not specified"}</p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-4">
+                      <div className="p-3 rounded-lg bg-emerald-500/10">
+                        <Briefcase className="h-6 w-6 text-emerald-400" />
+                      </div>
+                      <div>
+                        <p className="text-sm text-zinc-400">Experience</p>
+                        <p className="text-zinc-100 font-medium">{user.experience || "Not specified"}</p>
+                      </div>
+                    </div>
+
+                    {user.portfolio && (
+                      <div className="flex items-center gap-4">
+                        <div className="p-3 rounded-lg bg-emerald-500/10">
+                          <Layers className="h-6 w-6 text-emerald-400" />
+                        </div>
+                        <div>
+                          <p className="text-sm text-zinc-400">Portfolio</p>
+                          <p className="text-zinc-100 font-medium">{user.portfolio}</p>
+                        </div>
+                      </div>
+                    )}
+                  </>
+                )}
+              </div>
+
+              {/* Faculty Subjects */}
+              {user.role === "Faculty" && user.subject && user.subject.length > 0 && (
+                <div className="mt-8 pt-8 border-t border-zinc-700/50">
+                  <h3 className="text-lg font-semibold text-zinc-200 mb-4 flex items-center gap-2">
+                    <BookOpen className="h-5 w-5 text-emerald-400" />
+                    Assigned Subjects
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
+                    {user.subject.map((sub, idx) => (
+                      <span
+                        key={idx}
+                        className="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-sm font-medium"
+                      >
+                        {sub}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
             </CardContent>
           </Card>
         </motion.div>

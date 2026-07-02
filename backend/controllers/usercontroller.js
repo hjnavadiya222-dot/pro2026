@@ -135,9 +135,7 @@ export const logoutUser = async (req, res) => {
 
 export const updateProfile = async (req, res) => {
   try {
-    const { fullname, phoneNumber, semester, department } = req.body;
-
-
+    const { fullname, phoneNumber, semester, department, designation, qualification, experience, portfolio, subject } = req.body;
 
     const userId = req.params.id; // Get user ID from URL
     const file = req.file; // Fix: Use req.file (not req.files)
@@ -176,6 +174,31 @@ export const updateProfile = async (req, res) => {
       user.semester = semester;
     }
 
+    // Update faculty-specific fields if user is Faculty
+    if (user.role === "Faculty") {
+      if (designation) user.designation = designation;
+      if (qualification !== undefined) user.qualification = qualification;
+      if (experience !== undefined) user.experience = experience;
+      if (portfolio !== undefined) user.portfolio = portfolio;
+      
+      if (subject) {
+        let parsedSubjects = subject;
+        if (typeof parsedSubjects === "string") {
+          try {
+            parsedSubjects = JSON.parse(parsedSubjects);
+          } catch (e) {
+            parsedSubjects = parsedSubjects.split(",").map(s => s.trim()).filter(Boolean);
+          }
+        }
+        if (Array.isArray(parsedSubjects)) {
+          if (parsedSubjects.length === 0) {
+            return res.status(400).json({ message: "At least one subject is required for faculty." });
+          }
+          user.subject = parsedSubjects;
+        }
+      }
+    }
+
     // Save updated user details
     await user.save();
 
@@ -191,6 +214,10 @@ export const updateProfile = async (req, res) => {
       role: user.role,
       semester: user.semester,
       subject: user.subject,
+      designation: user.designation,
+      qualification: user.qualification,
+      experience: user.experience,
+      portfolio: user.portfolio,
     };
 
     res.status(200).json({ message: "Profile updated successfully", user: updatedUser });
