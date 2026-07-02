@@ -166,26 +166,6 @@ export default function Profile() {
                   </>
                 )}
               </div>
-
-              {/* Faculty Subjects */}
-              {user.role === "Faculty" && user.subject && user.subject.length > 0 && (
-                <div className="mt-8 pt-8 border-t border-zinc-700/50">
-                  <h3 className="text-lg font-semibold text-zinc-200 mb-4 flex items-center gap-2">
-                    <BookOpen className="h-5 w-5 text-emerald-400" />
-                    Assigned Subjects
-                  </h3>
-                  <div className="flex flex-wrap gap-2">
-                    {user.subject.map((sub, idx) => (
-                      <span
-                        key={idx}
-                        className="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-sm font-medium"
-                      >
-                        {sub}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
             </CardContent>
           </Card>
         </motion.div>
