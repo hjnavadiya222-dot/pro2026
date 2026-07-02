@@ -58,6 +58,22 @@ const userSchema = new mongoose.Schema(
         message: "At least one subject is required for faculty.",
       },
     },
+    designation: {
+      type: String,
+    },
+    qualification: {
+      type: String,
+    },
+    experience: {
+      type: String,
+    },
+    portfolio: {
+      type: String,
+    },
+    isRegistered: {
+      type: Boolean,
+      default: false,
+    },
     profile: {
       profilePicture: {
         url: {

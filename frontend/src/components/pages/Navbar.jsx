@@ -56,14 +56,43 @@ export function Navbar() {
 
         {/* Navigation Links */}
         <div className="hidden md:flex items-center space-x-6">
-          {isAuthenticated && (
+          <Link
+            to="/"
+            className="text-gray-300 hover:text-white transition duration-200"
+          >
+            Home
+          </Link>
+          {user?.role !== "Faculty" && (
+            <Link
+              to="/faculty"
+              className="text-gray-300 hover:text-white transition duration-200"
+            >
+              Faculty Directory
+            </Link>
+          )}
+
+          {!isAuthenticated ? (
             <>
-            
+              <Link
+                to="/login"
+                className="text-gray-300 hover:text-white transition duration-200"
+              >
+                Student Login
+              </Link>
+              <Link
+                to="/faculty/login"
+                className="text-gray-300 hover:text-white transition duration-200"
+              >
+                Faculty Login
+              </Link>
+            </>
+          ) : (
+            <>
               <Link
                 to={user?.role === "Student" ? "/homepage" : "/faculty/homepage"}
                 className="text-gray-300 hover:text-white transition duration-200"
               >
-                Home
+                Dashboard
               </Link>
               <Link
                 to={
@@ -103,18 +132,18 @@ export function Navbar() {
         <div className="flex items-center space-x-3">
           {!isAuthenticated ? (
             <>
-              {/* Show Login and Signup Buttons */}
               <Button
                 onClick={() => navigate("/login")}
-                className="text-sm font-medium"
+                className="text-sm font-medium border border-zinc-700 hover:bg-zinc-800"
+                variant="ghost"
               >
-                Login
+                Student Login
               </Button>
               <Button
-                onClick={() => navigate("/signup")}
-                className="text-sm font-medium bg-emerald-500"
+                onClick={() => navigate("/faculty/login")}
+                className="text-sm font-medium bg-emerald-500 hover:bg-emerald-600 text-white"
               >
-                Sign Up
+                Faculty Login
               </Button>
             </>
           ) : (

@@ -1,5 +1,5 @@
 import express from "express";
-import { registerStudent, addFaculty, loginUser, logoutUser, updateProfile, getFacultyBySubject, getAllSub, getAllFaculty, deleteFaculty } from "../controllers/usercontroller.js";
+import { registerStudent, registerFaculty, addFaculty, loginUser, logoutUser, updateProfile, getFacultyBySubject, getAllSub, getAllFaculty, deleteFaculty } from "../controllers/usercontroller.js";
 import { authMiddleware } from "../middlewares/authMiddleware.js";
 import { adminMiddleware } from "../middlewares/adminMiddleware.js";
 import { singleUpload } from "../middlewares/multer.js";
@@ -7,8 +7,10 @@ import { singleUpload } from "../middlewares/multer.js";
 const router = express.Router();
 
 // Student Signup
-
 router.route("/signup").post(registerStudent);
+
+// Faculty Signup
+router.route("/register-faculty").post(registerFaculty);
 // console.log("vinit");
 
 // Admin Adds Faculty (Requires Admin Auth)

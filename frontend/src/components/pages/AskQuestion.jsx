@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -12,6 +12,9 @@ const AskQuestion = () => {
   const { user } = useSelector((state) => state.auth);
   const studentId = user?._id; // Get student ID from Redux state
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const preselected = location.state?.preselectedFaculty;
 
   const [facultyId, setFacultyId] = useState(""); // Store faculty ID
   const [facultyList, setFacultyList] = useState([]); // Store faculty list
@@ -19,7 +22,7 @@ const AskQuestion = () => {
   const [formData, setFormData] = useState({
     studentId: "",
     facultyId: "",
-    subject: "",
+    subject: preselected?.subject || "",
     questionTitle: "",
     questionText: "",
     attachment: null,
@@ -60,6 +63,9 @@ const AskQuestion = () => {
           );
           if (Array.isArray(response.data)) {
             setFacultyList(response.data);
+            if (preselected && response.data.some(f => f._id === preselected._id)) {
+              setFacultyId(preselected._id);
+            }
           } else {
             console.error("Faculty data is not an array", response.data);
           }
@@ -71,7 +77,7 @@ const AskQuestion = () => {
     } else {
       setFacultyList([]); // Clear faculty list when no subject is selected
     }
-  }, [formData.subject]);
+  }, [formData.subject, preselected]);
 
   const handleChange = (e) => {
     const { name, value, type, files } = e.target;

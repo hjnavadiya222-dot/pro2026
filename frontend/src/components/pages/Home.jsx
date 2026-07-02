@@ -157,20 +157,20 @@ export default function Home() {
               </div>
             </motion.div>
 
-            {/* Right Image */}
+             {/* Right Image */}
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
               className="relative"
             >
-              <div className="relative w-full h-[400px] rounded-2xl overflow-hidden">
+              <div className="relative w-full h-[400px] rounded-2xl overflow-hidden border border-emerald-500/20 shadow-2xl shadow-emerald-500/10">
                 <img
-                  src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1000&auto=format&fit=crop"
-                  alt="Students learning"
-                  className="absolute inset-0 w-full h-full object-cover"
+                  src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200&auto=format&fit=crop"
+                  alt="Students collaborating"
+                  className="absolute inset-0 w-full h-full object-cover filter brightness-90"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-zinc-900/80 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/20 to-transparent" />
               </div>
             </motion.div>
           </div>

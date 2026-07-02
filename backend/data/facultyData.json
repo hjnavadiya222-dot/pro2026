@@ -1,0 +1,207 @@
+[
+  {
+    "name": "Prof. (Dr.) Mita Parikh",
+    "designation": "Professor",
+    "qualification": "Ph.D. (Computer Engineering)",
+    "experience": "25 Years",
+    "portfolio": "Head Of the Department",
+    "email": "mita.parikh@scet.ac.in"
+  },
+  {
+    "name": "Prof. (Dr.) Vivaksha Jariwala",
+    "designation": "Professor",
+    "qualification": "Ph.D. (Computer Engineering)",
+    "experience": "22 Years (Academic), 1.5 Years (Industry)",
+    "portfolio": "Convener IT Solutions & Web Committee",
+    "email": "vivaksha.jariwala@scet.ac.in"
+  },
+  {
+    "name": "Prof. (Dr.) Dhruti Sharma",
+    "designation": "Associate Professor",
+    "qualification": "Ph.D. (Computer Engineering)",
+    "experience": "19+ Years",
+    "email": "dhruti.sharma@scet.ac.in"
+  },
+  {
+    "name": "Prof. Hiren H. Vavaiya",
+    "designation": "Assistant Professor",
+    "qualification": "M.Tech (Computer Science & Engineering)",
+    "experience": "20 Years",
+    "email": "hiren.vavaiya@scet.ac.in"
+  },
+  {
+    "name": "Prof. Tushar Gohil",
+    "designation": "Assistant Professor",
+    "qualification": "M.Tech (Computer Science & Engineering)",
+    "experience": "19 Years",
+    "email": "tushar.gohil@scet.ac.in"
+  },
+  {
+    "name": "Prof. Ashish Kharwar",
+    "designation": "Assistant Professor",
+    "qualification": "M.Tech (Computer Science & Engineering)",
+    "experience": "18 Years",
+    "email": "ashish.kharwar@scet.ac.in"
+  },
+  {
+    "name": "Prof. Apurva Bharat Mandalaywala",
+    "designation": "Assistant Professor",
+    "qualification": "M.Tech (Communication Engineering), MBA (Gold Medallist), MA (Economics)",
+    "experience": "19 Years",
+    "email": "apurva.mandalaywala@scet.ac.in"
+  },
+  {
+    "name": "Prof. Bhumika Patel",
+    "designation": "Assistant Professor",
+    "qualification": "B.E. IT, M.Tech Computer (Gold Medalist)",
+    "experience": "16 Years",
+    "email": "bhumika.patel@scet.ac.in"
+  },
+  {
+    "name": "Prof. Mukesh Patel",
+    "designation": "Assistant Professor",
+    "qualification": "M.E. Computer (Gold Medalist)",
+    "experience": "22 Years",
+    "email": "mukesh.patel@scet.ac.in"
+  },
+  {
+    "name": "Prof. (Dr.) Ankit Kharwar",
+    "designation": "Assistant Professor",
+    "qualification": "Ph.D. (Computer Engineering)",
+    "experience": "12 Years (Academic), 7 Months (Industry)",
+    "email": "ankit.kharwar@scet.ac.in"
+  },
+  {
+    "name": "Prof. Ankit D. Patel",
+    "designation": "Assistant Professor",
+    "qualification": "M.E., Ph.D. (Pursuing)",
+    "experience": "10 Years",
+    "email": "ankit.patel@scet.ac.in"
+  },
+  {
+    "name": "Prof. Karishma H. Desai",
+    "designation": "Assistant Professor",
+    "qualification": "M.E. (Computer)",
+    "experience": "8 Years",
+    "email": "karishma.desai@scet.ac.in"
+  },
+  {
+    "name": "Prof. Palak Desai",
+    "designation": "Assistant Professor",
+    "qualification": "B.E. (Information Technology), M.E. (Computer Engineering)",
+    "experience": "13+ Years",
+    "email": "palak.desai@scet.ac.in"
+  },
+  {
+    "name": "Prof. (Dr.) Mitali H. Desai",
+    "designation": "Assistant Professor",
+    "qualification": "Ph.D. (Computer Engineering)",
+    "experience": "10 Years",
+    "email": "mitali.desai@scet.ac.in"
+  },
+  {
+    "name": "Prof. Nitya Komalan",
+    "designation": "Assistant Professor",
+    "qualification": "M.E. (Computer Engineering)",
+    "experience": "5 Years (Academic), 3 Years (Industry)",
+    "email": "nitya.komalan@scet.ac.in"
+  },
+  {
+    "name": "Prof. (Dr.) Vivek H. Champaneria",
+    "designation": "Assistant Professor",
+    "qualification": "Ph.D. (Computer Engineering)",
+    "experience": "10 Years",
+    "email": "vivek.champaneria@scet.ac.in"
+  },
+  {
+    "name": "Dr. Krishna Samarth Delvadia",
+    "designation": "Assistant Professor",
+    "qualification": "Ph.D. (Computer Engineering)",
+    "experience": "9 Years",
+    "email": "krishna.delvadia@scet.ac.in"
+  },
+  {
+    "name": "Prof. Mitul Patel",
+    "designation": "Assistant Professor",
+    "qualification": "M.Tech (Information Technology), Ph.D. (Pursuing)",
+    "experience": "10 Years",
+    "email": "mitul.patel@scet.ac.in"
+  },
+  {
+    "name": "Dr. Vibha Patel",
+    "designation": "Assistant Professor",
+    "qualification": "Ph.D. (Computer Engineering)",
+    "experience": "15 Years",
+    "email": "vibha.patel@scet.ac.in"
+  },
+  {
+    "name": "Prof. Dhaval J. Rana",
+    "designation": "Assistant Professor",
+    "qualification": "B.E. (Computer Engineering), M.E. (Information Technology), Ph.D. (Pursuing)",
+    "experience": "12+ Years",
+    "email": "dhaval.rana@scet.ac.in"
+  },
+  {
+    "name": "Ashishkumar Ranchhodbhai Chaudhari",
+    "designation": "Assistant Professor",
+    "qualification": "M.Tech (Computer Engineering), Ph.D. (Pursuing)",
+    "experience": "9 Years",
+    "email": "ashish.chaudhari@scet.ac.in"
+  },
+  {
+    "name": "Prof. Snehal Kathale",
+    "designation": "Assistant Professor",
+    "qualification": "Ph.D. (Pursuing), M.Tech (CSE), B.E. (IT)",
+    "experience": "12 Years",
+    "email": "snehal.kathale@scet.ac.in"
+  },
+  {
+    "name": "Ms. Dhyani Joshi",
+    "designation": "Assistant Professor (Contractual)",
+    "qualification": "M.Tech Computer Science",
+    "experience": "3 Years (Academic)",
+    "email": "dhyani.joshi@scet.ac.in"
+  },
+  {
+    "name": "Ms. Heena Panchal",
+    "designation": "Laboratory Assistant",
+    "qualification": "Diploma in Computer Technology",
+    "experience": "20 Years",
+    "email": "heena.desai@scet.ac.in"
+  },
+  {
+    "name": "Ms. Khushbu Naik",
+    "designation": "Laboratory Assistant",
+    "qualification": "Diploma in Computer Engineering, B.Sc (Computer Science)",
+    "experience": "19 Years",
+    "email": "khushbu.naik@scet.ac.in"
+  },
+  {
+    "name": "Mr. Tejas P. Taniya",
+    "designation": "Laboratory Assistant",
+    "qualification": "Graduation",
+    "experience": "Nil",
+    "email": "Not Available"
+  },
+  {
+    "name": "Mr. Dipak Lad",
+    "designation": "Laboratory Attendant",
+    "qualification": "ITI",
+    "experience": "22 Years",
+    "email": "dipak.lad@scet.ac.in"
+  },
+  {
+    "name": "Mr. Trishant Thakkar",
+    "designation": "Laboratory Attendant",
+    "qualification": "S.S.C.",
+    "experience": "22 Years",
+    "email": "trishant.thakkar@scet.ac.in"
+  },
+  {
+    "name": "Mr. Minesh Kharose",
+    "designation": "Laboratory Attendant",
+    "qualification": "S.S.C.",
+    "experience": "17 Years",
+    "email": "minesh.kharose@scet.ac.in"
+  }
+]

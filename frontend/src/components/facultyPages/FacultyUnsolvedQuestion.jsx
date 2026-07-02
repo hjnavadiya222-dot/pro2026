@@ -8,12 +8,15 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Card, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
-import { MessageCircle, Clock, X } from "lucide-react";
+import { MessageCircle, Clock, X, Search, User, Mail, GraduationCap } from "lucide-react";
 
 export default function FacultyUnsolvedQuestion() {
   useGetFacultyQuestions(); // Fetch questions
-  const questions = useSelector((state) => state.auth.questions);
+  const questions = useSelector((state) => state.auth.questions) || [];
   const navigate = useNavigate();
+
+  // Search state
+  const [searchQuery, setSearchQuery] = useState("");
 
   // State to manage answers
   const [answers, setAnswers] = useState({});
@@ -24,6 +27,19 @@ export default function FacultyUnsolvedQuestion() {
   // Filter only pending (unsolved) questions
   const unsolvedQuestions = questions.filter((q) => q.status === "Pending");
 
+  // Filter based on search query
+  const filteredQuestions = unsolvedQuestions.filter((q) => {
+    const query = searchQuery.toLowerCase().trim();
+    if (!query) return true;
+    return (
+      (q.subject || "").toLowerCase().includes(query) ||
+      (q.questionTitle || "").toLowerCase().includes(query) ||
+      (q.questionText || "").toLowerCase().includes(query) ||
+      (q.studentId?.fullname || "").toLowerCase().includes(query) ||
+      (q.studentId?.email || "").toLowerCase().includes(query)
+    );
+  });
+
   // Handle input change
   const handleInputChange = (id, value) => {
     setAnswers((prev) => ({ ...prev, [id]: value }));
@@ -31,6 +47,9 @@ export default function FacultyUnsolvedQuestion() {
 
   // Handle answer submission
   const handleAnswerSubmit = async (id) => {
+    if (!answers[id] || !answers[id].trim()) {
+      return alert("Please enter an answer reply first.");
+    }
     try {
       await axios.post(
         `http://localhost:8000/api/v1/question/answer/${id}`,
@@ -49,6 +68,26 @@ export default function FacultyUnsolvedQuestion() {
     }
   };
 
+  // Handle quick mark as solved
+  const handleQuickSolve = async (id) => {
+    try {
+      await axios.post(
+        `http://localhost:8000/api/v1/question/answer/${id}`,
+        {
+          answerText: "Doubt resolved by faculty.",
+        },
+        { withCredentials: true }
+      );
+
+      navigate("/faculty/solved/questions");
+    } catch (error) {
+      console.error(
+        "Error marking as solved:",
+        error.response?.data?.message || error.message
+      );
+    }
+  };
+
   return (
     <div className="min-h-screen bg-zinc-900">
       <Navbar />
@@ -59,18 +98,37 @@ export default function FacultyUnsolvedQuestion() {
             Unsolved Questions
           </h1>
           <p className="text-zinc-400 text-lg">Answer pending questions</p>
+          <div className="w-20 h-1 bg-gradient-to-r from-emerald-500 to-rose-500 mx-auto mt-4"></div>
         </motion.div>
 
+        {/* Search Bar */}
+        {unsolvedQuestions.length > 0 && (
+          <div className="relative max-w-xl mx-auto mb-8">
+            <Search className="absolute left-3 top-2.5 h-5 w-5 text-zinc-400" />
+            <input
+              type="text"
+              placeholder="Search doubts by title, subject, student name..."
+              className="w-full pl-10 pr-4 py-2 bg-zinc-800/50 border border-zinc-700 rounded-xl text-zinc-100 placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition duration-200"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </div>
+        )}
+
         {unsolvedQuestions.length === 0 ? (
-          <Card className="bg-zinc-800/30 border-zinc-700/50 backdrop-blur-sm text-center p-8">
+          <Card className="bg-zinc-800/30 border-zinc-700/50 backdrop-blur-sm text-center p-8 max-w-2xl mx-auto">
             <p className="text-zinc-400 text-lg">No unsolved questions available.</p>
           </Card>
+        ) : filteredQuestions.length === 0 ? (
+          <Card className="bg-zinc-800/30 border-zinc-700/50 backdrop-blur-sm text-center p-8 max-w-2xl mx-auto">
+            <p className="text-zinc-400 text-lg">No unsolved questions match your search.</p>
+          </Card>
         ) : (
-          <motion.div className="grid gap-6">
-            {unsolvedQuestions.map((question) => (
+          <motion.div className="grid gap-6 max-w-4xl mx-auto">
+            {filteredQuestions.map((question) => (
               <Card
                 key={question._id}
-                className="bg-zinc-800/30 border-zinc-700/50 backdrop-blur-sm"
+                className="bg-zinc-800/30 border-zinc-700/50 backdrop-blur-sm shadow-md"
               >
                 <CardContent className="p-6">
                   <div className="space-y-4">
@@ -79,16 +137,38 @@ export default function FacultyUnsolvedQuestion() {
                         <MessageCircle className="h-5 w-5 text-emerald-400" />{" "}
                         {question.subject}
                       </h3>
-                      <span className="text-rose-400 font-medium flex items-center gap-2">
-                        <Clock className="h-5 w-5" /> Pending
+                      <span className="text-rose-400 font-medium flex items-center gap-2 text-sm bg-rose-500/10 px-3 py-1 rounded-full border border-rose-500/20">
+                        <Clock className="h-4 w-4" /> Pending
                       </span>
                     </div>
 
-                    <p className="text-lg text-zinc-300 pl-10">
+                    {/* Student Info Card */}
+                    {question.studentId && (
+                      <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-zinc-400 bg-zinc-900/40 p-3.5 rounded-xl border border-zinc-800">
+                        <div className="flex items-center gap-2">
+                          <User className="h-4 w-4 text-emerald-500" />
+                          <span className="font-medium text-zinc-300">Student: </span>
+                          <span>{question.studentId.fullname}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Mail className="h-4 w-4 text-zinc-500" />
+                          <span className="font-medium text-zinc-300">Email: </span>
+                          <a href={`mailto:${question.studentId.email}`} className="hover:underline text-emerald-400">
+                            {question.studentId.email}
+                          </a>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <GraduationCap className="h-4 w-4 text-zinc-500" />
+                          <span className="font-medium text-zinc-300">Semester: </span>
+                          <span>{question.studentId.semester}</span>
+                        </div>
+                      </div>
+                    )}
+
+                    <p className="text-lg text-zinc-100 font-medium pl-1">
                       {question.questionTitle}
                     </p>
 
-                    {/* ✅ Added questionText section here */}
                     <div className="bg-zinc-800/50 p-6 rounded-xl border border-zinc-700/50">
                       <p className="text-zinc-300 leading-relaxed">
                         {question?.questionText || "No question text provided."}
@@ -96,25 +176,25 @@ export default function FacultyUnsolvedQuestion() {
                     </div>
 
                     {question?.questionFile?.url && (
-                      <div className="pl-10">
+                      <div className="pl-1">
                         <img
                           src={question.questionFile.url}
                           alt="Question Attachment"
-                          className="w-full max-h-80 object-contain rounded-lg border border-zinc-600 shadow-md"
+                          className="w-full max-h-80 object-contain rounded-lg border border-zinc-700 shadow-md mb-2"
                         />
                         <Button
-                          className="mt-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md"
+                          className="bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 border border-blue-500/20 px-4 py-1.5 rounded-xl text-sm"
                           onClick={() =>
                             setSelectedImage(question.questionFile.url)
                           }
                         >
-                          See Image
+                          View Full Image
                         </Button>
                       </div>
                     )}
 
                     <textarea
-                      className="w-full px-4 py-2 bg-zinc-800/50 border border-zinc-700 rounded-md text-zinc-100 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                      className="w-full px-4 py-2 bg-zinc-800/50 border border-zinc-700 rounded-xl text-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 placeholder-zinc-500"
                       placeholder="Enter your answer here..."
                       value={answers[question._id] || ""}
                       onChange={(e) =>
@@ -123,12 +203,20 @@ export default function FacultyUnsolvedQuestion() {
                       rows="4"
                     ></textarea>
 
-                    <Button
-                      className="bg-gradient-to-r from-emerald-500 to-emerald-600 text-white hover:from-emerald-600 hover:to-emerald-700 transition-all duration-200"
-                      onClick={() => handleAnswerSubmit(question._id)}
-                    >
-                      Submit Answer
-                    </Button>
+                    <div className="flex gap-4">
+                      <Button
+                        className="bg-gradient-to-r from-emerald-500 to-emerald-600 text-white hover:from-emerald-600 hover:to-emerald-700 font-semibold shadow-md shadow-emerald-500/10 transition-all duration-200 rounded-xl px-6"
+                        onClick={() => handleAnswerSubmit(question._id)}
+                      >
+                        Submit Answer
+                      </Button>
+                      <Button
+                        className="bg-zinc-800 hover:bg-zinc-700 text-zinc-300 border border-zinc-700 transition-all duration-200 rounded-xl px-6"
+                        onClick={() => handleQuickSolve(question._id)}
+                      >
+                        Mark as Solved
+                      </Button>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
@@ -139,10 +227,10 @@ export default function FacultyUnsolvedQuestion() {
 
       {/* Image Modal */}
       {selectedImage && (
-        <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50">
-          <div className="relative bg-zinc-900 p-4 rounded-lg shadow-lg max-w-2xl w-full">
+        <div className="fixed inset-0 bg-black/95 flex items-center justify-center z-50">
+          <div className="relative p-4 max-w-4xl w-full">
             <button
-              className="absolute top-2 right-2 bg-red-500 hover:bg-red-600 text-white p-2 rounded-full"
+              className="absolute -top-12 right-2 bg-rose-500 hover:bg-rose-600 text-white p-2 rounded-full shadow-lg"
               onClick={() => setSelectedImage(null)}
             >
               <X className="w-5 h-5" />
@@ -150,7 +238,7 @@ export default function FacultyUnsolvedQuestion() {
             <img
               src={selectedImage}
               alt="Full Size"
-              className="w-full max-h-[80vh] object-contain rounded-lg"
+              className="w-full max-h-[85vh] object-contain rounded-lg shadow-2xl"
             />
           </div>
         </div>

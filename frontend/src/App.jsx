@@ -1,7 +1,7 @@
 import React from 'react'
 import { createBrowserRouter } from 'react-router-dom'
-import { Login } from './components/auth/login'
-import { Signup } from './components/auth/signup'
+import { Login } from './components/auth/Login'
+import { Signup } from './components/auth/Signup'
 import { RouterProvider } from 'react-router'
 import Home from './components/pages/Home'
 import { SolvedQuestion } from './components/pages/SolvedQuestion'
@@ -19,28 +19,39 @@ import FacultyUnsolvedQuestion from './components/facultyPages/FacultyUnsolvedQu
 import FacultySolvedQuestion from './components/facultyPages/FacultySolvedQuestion'
 import { FacultyHome } from './components/pages/FacultyHome'
 import AdminHome from './components/Admin/adminhome'
+import FacultyDirectory from './components/pages/FacultyDirectory'
+import FacultyLogin from './components/auth/FacultyLogin'
+import FacultySignup from './components/auth/FacultySignup'
+import ProtectedRoute from './components/auth/ProtectedRoute'
 
 const appRouter = createBrowserRouter([
   { path: "/", element: <Home /> },
-  { path: "/homepage", element: <UserHome /> },
   { path: "/login", element: <Login /> },
   { path: "/signup", element: <Signup /> },
-  { path: "/askquestion", element: <AskQuestion /> },
-  { path: "/solvedquestions", element: <SolvedQuestion /> },
-  { path: "/unsolvedquestions", element: <UnSolvedQuestions /> },
-  { path: "/allquestions", element: <AllQuestions /> },
-  { path: "/profile", element: <Profile /> },
-  { path: "/edit/profile", element: <EditProfile /> },
-  { path: "/answer/:id", element: <Answer /> },
+  { path: "/faculty/login", element: <FacultyLogin /> },
+  { path: "/faculty/signup", element: <FacultySignup /> },
+  
+  // public/shared directory
+  { path: "/faculty", element: <FacultyDirectory /> },
+
+  // student routes
+  { path: "/homepage", element: <ProtectedRoute allowedRoles={["Student"]}><UserHome /></ProtectedRoute> },
+  { path: "/askquestion", element: <ProtectedRoute allowedRoles={["Student"]}><AskQuestion /></ProtectedRoute> },
+  { path: "/solvedquestions", element: <ProtectedRoute allowedRoles={["Student"]}><SolvedQuestion /></ProtectedRoute> },
+  { path: "/unsolvedquestions", element: <ProtectedRoute allowedRoles={["Student"]}><UnSolvedQuestions /></ProtectedRoute> },
+  { path: "/allquestions", element: <ProtectedRoute allowedRoles={["Student"]}><AllQuestions /></ProtectedRoute> },
+  { path: "/profile", element: <ProtectedRoute allowedRoles={["Student"]}><Profile /></ProtectedRoute> },
+  { path: "/edit/profile", element: <ProtectedRoute allowedRoles={["Student"]}><EditProfile /></ProtectedRoute> },
 
   // faculty routes
-  { path: "/faculty/homepage", element: <FacultyHome /> },
-  { path: "/faculty/allquestions", element: <FacultyAllQuestion /> },
-  { path: "/faculty/unsolved/questions", element: <FacultyUnsolvedQuestion /> },
-  { path: "/faculty/solved/questions", element: <FacultySolvedQuestion /> },
+  { path: "/faculty/homepage", element: <ProtectedRoute allowedRoles={["Faculty"]}><FacultyHome /></ProtectedRoute> },
+  { path: "/faculty/allquestions", element: <ProtectedRoute allowedRoles={["Faculty"]}><FacultyAllQuestion /></ProtectedRoute> },
+  { path: "/faculty/unsolved/questions", element: <ProtectedRoute allowedRoles={["Faculty"]}><FacultyUnsolvedQuestion /></ProtectedRoute> },
+  { path: "/faculty/solved/questions", element: <ProtectedRoute allowedRoles={["Faculty"]}><FacultySolvedQuestion /></ProtectedRoute> },
+  { path: "/answer/:id", element: <ProtectedRoute allowedRoles={["Faculty"]}><Answer /></ProtectedRoute> },
 
   // admin routes
-  { path: "/admin/homepage", element: <AdminHome /> },
+  { path: "/admin/homepage", element: <ProtectedRoute allowedRoles={["Admin"]}><AdminHome /></ProtectedRoute> },
 ])
 
 export function App() {

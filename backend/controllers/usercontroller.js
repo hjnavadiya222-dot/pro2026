@@ -367,3 +367,48 @@ export const deleteFaculty = async (req, res) => {
     res.status(500).json({ message: "Error deleting faculty", error: error.message });
   }
 };
+
+export const registerFaculty = async (req, res) => {
+  try {
+    const { fullname, email, password, designation, department } = req.body;
+
+    if (!fullname || !email || !password || !designation || !department) {
+      return res.status(400).json({ message: "All fields are required.", success: false });
+    }
+
+    // Email Validation: Only allow faculty emails from @scet.ac.in
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@scet\.ac\.in$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ message: "Only official faculty emails from @scet.ac.in are allowed!", success: false });
+    }
+
+    // Faculty Verification:
+    // 1. If email does not exist in Faculty Directory (User table with role Faculty), deny registration.
+    const faculty = await User.findOne({ email, role: "Faculty" });
+    if (!faculty) {
+      return res.status(400).json({ message: "Email is not listed in the Faculty Directory. Please contact the administrator.", success: false });
+    }
+
+    // 2. Prevent duplicate faculty accounts.
+    if (faculty.isRegistered) {
+      return res.status(400).json({ message: "Faculty account has already been registered.", success: false });
+    }
+
+    // Hashing password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Update the existing seeded faculty record
+    faculty.fullname = fullname;
+    faculty.password = hashedPassword;
+    faculty.designation = designation;
+    faculty.department = department;
+    faculty.isRegistered = true;
+
+    await faculty.save();
+
+    res.status(200).json({ message: "Faculty registered successfully!", success: true });
+  } catch (error) {
+    console.error("Error registering faculty:", error);
+    res.status(500).json({ message: "Error registering faculty", error: error.message, success: false });
+  }
+};
