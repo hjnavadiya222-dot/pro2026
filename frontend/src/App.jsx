@@ -40,8 +40,8 @@ const appRouter = createBrowserRouter([
   { path: "/solvedquestions", element: <ProtectedRoute allowedRoles={["Student"]}><SolvedQuestion /></ProtectedRoute> },
   { path: "/unsolvedquestions", element: <ProtectedRoute allowedRoles={["Student"]}><UnSolvedQuestions /></ProtectedRoute> },
   { path: "/allquestions", element: <ProtectedRoute allowedRoles={["Student"]}><AllQuestions /></ProtectedRoute> },
-  { path: "/profile", element: <ProtectedRoute allowedRoles={["Student"]}><Profile /></ProtectedRoute> },
-  { path: "/edit/profile", element: <ProtectedRoute allowedRoles={["Student"]}><EditProfile /></ProtectedRoute> },
+  { path: "/profile", element: <ProtectedRoute allowedRoles={["Student", "Faculty"]}><Profile /></ProtectedRoute> },
+  { path: "/edit/profile", element: <ProtectedRoute allowedRoles={["Student", "Faculty"]}><EditProfile /></ProtectedRoute> },
 
   // faculty routes
   { path: "/faculty/homepage", element: <ProtectedRoute allowedRoles={["Faculty"]}><FacultyHome /></ProtectedRoute> },
