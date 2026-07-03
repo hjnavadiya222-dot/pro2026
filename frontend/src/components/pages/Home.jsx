@@ -84,8 +84,12 @@ export default function Home() {
 
   const handleGetStarted = () => {
     if (user) {
-      // If user is logged in, navigate to faculty directory
-      navigate('/faculty');
+      if (user.role === "Faculty") {
+        navigate('/faculty/unsolved/questions');
+      } else {
+        // If user is a student/other, navigate to faculty directory
+        navigate('/faculty');
+      }
     } else {
       // If user is not logged in, open login dialog
       setIsLoginOpen(true);
