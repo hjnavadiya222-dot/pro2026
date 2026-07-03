@@ -18,6 +18,18 @@ const seedFaculty = async () => {
     const rawData = fs.readFileSync(filePath, 'utf-8');
     const facultyList = JSON.parse(rawData);
 
+    // Delete any Faculty users in the database that are no longer present in the facultyData.json list
+    const allowedEmails = facultyList.map(fac => fac.email).filter(email => email && email !== "Not Available");
+    const allowedNames = facultyList.map(fac => fac.name);
+    const deleteResult = await User.deleteMany({
+      role: "Faculty",
+      email: { $nin: allowedEmails },
+      fullname: { $nin: allowedNames }
+    });
+    if (deleteResult.deletedCount > 0) {
+      console.log(`Removed ${deleteResult.deletedCount} outdated faculty records from the database.`);
+    }
+
     // Collect all subjects to assign to each faculty member
     const subjects = [
       "Principles of Economics and Management (BTAS10301)",
