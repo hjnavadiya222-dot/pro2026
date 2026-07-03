@@ -163,6 +163,9 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen bg-zinc-900">
       <Navbar />
+      {isSignupOpen && (
+        <Signup setIsSignupOpen={setIsSignupOpen} setIsLoginOpen={setIsLoginOpen} />
+      )}
 
       {/* Hero Section */}
       <motion.section
@@ -215,7 +218,7 @@ export default function Home() {
                     </Button>
                   </DialogTrigger>
                   <DialogContent>
-                    <Login isDialog={true} setIsLoginOpen={setIsLoginOpen} />
+                    <Login isDialog={true} setIsLoginOpen={setIsLoginOpen} setIsSignupOpen={setIsSignupOpen} />
                   </DialogContent>
                 </Dialog>
               </div>

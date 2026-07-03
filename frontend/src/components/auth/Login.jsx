@@ -37,8 +37,12 @@ export function Login({ isDialog = false, setIsLoginOpen, setIsSignupOpen }) {
   };
 
   const handleSwitchToSignup = () => {
-    setIsLoginOpen(false);
-    setIsSignupOpen(true);
+    if (isDialog && setIsLoginOpen && setIsSignupOpen) {
+      setIsLoginOpen(false);
+      setIsSignupOpen(true);
+    } else {
+      navigate("/signup");
+    }
   };
 
   if (isDialog) {
@@ -122,14 +126,14 @@ export function Login({ isDialog = false, setIsLoginOpen, setIsSignupOpen }) {
             </h2>
             <p className="text-zinc-400">Enter your credentials to access your account</p>
           </div>
-          <LoginForm input={input} handleChange={setInput} handleLogin={handleLogin} loading={loading} />
+          <LoginForm input={input} handleChange={setInput} handleLogin={handleLogin} loading={loading} handleSwitchToSignup={handleSwitchToSignup} />
         </div>
       </div>
     </div>
   );
 }
 
-function LoginForm({ input, handleChange, handleLogin, loading }) {
+function LoginForm({ input, handleChange, handleLogin, loading, handleSwitchToSignup }) {
   return (
     <div className="grid gap-4 py-4">
       <div className="grid gap-2">
@@ -171,7 +175,13 @@ function LoginForm({ input, handleChange, handleLogin, loading }) {
         )}
       </Button>
       <div className="text-center text-zinc-400 text-sm">
-        Don't have an account? <span className="text-emerald-400 hover:text-emerald-300 cursor-pointer">Sign up</span>
+        Don't have an account?{" "}
+        <span
+          onClick={handleSwitchToSignup}
+          className="text-emerald-400 hover:text-emerald-300 cursor-pointer transition-colors duration-200"
+        >
+          Sign up
+        </span>
       </div>
     </div>
   );
