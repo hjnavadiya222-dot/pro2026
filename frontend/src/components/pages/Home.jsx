@@ -49,7 +49,7 @@ export default function Home() {
     }
   ];
 
-  const steps = [
+  const studentSteps = [
     {
       icon: <PenSquare className="h-8 w-8 text-emerald-400" />,
       title: "Login or Create Account",
@@ -81,6 +81,41 @@ export default function Home() {
       description: "Mark your doubt as resolved once you understand the solution"
     }
   ];
+
+  const facultySteps = [
+    {
+      icon: <PenSquare className="h-8 w-8 text-emerald-400" />,
+      title: "Login to Faculty Portal",
+      description: "Sign in to your verified faculty account to manage your doubts"
+    },
+    {
+      icon: <GraduationCap className="h-8 w-8 text-emerald-400" />,
+      title: "Access Dashboard",
+      description: "View overview statistics of your total, solved, and pending doubts"
+    },
+    {
+      icon: <MessageCircle className="h-8 w-8 text-emerald-400" />,
+      title: "Browse Unsolved Doubts",
+      description: "Navigate to the unsolved section to see pending student questions"
+    },
+    {
+      icon: <Clock className="h-8 w-8 text-emerald-400" />,
+      title: "Select a Question",
+      description: "Choose a specific student doubt to view details and descriptions"
+    },
+    {
+      icon: <Send className="h-8 w-8 text-emerald-400" />,
+      title: "Provide a Solution",
+      description: "Write a detailed answer to clear the student's academic doubt"
+    },
+    {
+      icon: <CheckSquare className="h-8 w-8 text-emerald-400" />,
+      title: "Submit & Resolve",
+      description: "Submit the response to mark the doubt as answered and resolved"
+    }
+  ];
+
+  const steps = user?.role === "Faculty" ? facultySteps : studentSteps;
 
   const handleGetStarted = () => {
     if (user) {
@@ -262,7 +297,9 @@ export default function Home() {
             <h2 className="text-4xl font-bold text-zinc-100 mb-4">How It Works</h2>
             <div className="w-20 h-1 bg-gradient-to-r from-emerald-500 to-teal-500 mx-auto mb-6"></div>
             <p className="text-zinc-400 max-w-2xl mx-auto leading-relaxed">
-              Get your doubts resolved in six simple steps
+              {user?.role === "Faculty" 
+                ? "Resolve student doubts in six simple steps" 
+                : "Get your doubts resolved in six simple steps"}
             </p>
           </div>
 
