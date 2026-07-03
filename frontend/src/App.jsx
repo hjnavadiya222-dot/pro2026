@@ -20,6 +20,7 @@ import FacultySolvedQuestion from './components/facultyPages/FacultySolvedQuesti
 import { FacultyHome } from './components/pages/FacultyHome'
 import AdminHome from './components/Admin/adminhome'
 import FacultyDirectory from './components/pages/FacultyDirectory'
+import AboutUs from './components/pages/AboutUs'
 import FacultyLogin from './components/auth/FacultyLogin'
 import FacultySignup from './components/auth/FacultySignup'
 import ProtectedRoute from './components/auth/ProtectedRoute'
@@ -32,7 +33,8 @@ const appRouter = createBrowserRouter([
   { path: "/faculty/signup", element: <FacultySignup /> },
   
   // public/shared directory
-  { path: "/faculty", element: <FacultyDirectory /> },
+  { path: "/faculty", element: <ProtectedRoute allowedRoles={["Student", "Faculty", "Admin"]}><FacultyDirectory /></ProtectedRoute> },
+  { path: "/faculty/aboutus", element: <ProtectedRoute allowedRoles={["Faculty"]}><AboutUs /></ProtectedRoute> },
 
   // student routes
   { path: "/homepage", element: <ProtectedRoute allowedRoles={["Student"]}><UserHome /></ProtectedRoute> },
