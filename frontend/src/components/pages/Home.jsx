@@ -26,7 +26,7 @@ export default function Home() {
   const [isSignupOpen, setIsSignupOpen] = useState(false);
   const { user } = useSelector((state) => state.auth);
 
-  const features = [
+  const studentFeatures = [
     {
       icon: <MessageCircle className="h-6 w-6 text-white" />,
       title: "24/7 Doubt Resolution",
@@ -48,6 +48,31 @@ export default function Home() {
       description: "Get verified answers from experienced faculty members you trust"
     }
   ];
+
+  const facultyFeatures = [
+    {
+      icon: <MessageCircle className="h-6 w-6 text-white" />,
+      title: "Centralized Doubt Hub",
+      description: "Manage and track all student queries from a single, unified dashboard"
+    },
+    {
+      icon: <Clock className="h-6 w-6 text-white" />,
+      title: "Flexible Responding",
+      description: "Answer students' questions at your own convenience, avoiding office hour rushes"
+    },
+    {
+      icon: <Users className="h-6 w-6 text-white" />,
+      title: "Better Student Connect",
+      description: "Establish closer academic engagement and clarify concepts outside of lectures"
+    },
+    {
+      icon: <CheckCircle className="h-6 w-6 text-white" />,
+      title: "Repetitive Doubt Reduction",
+      description: "Resolve common doubts once so students can learn collectively from existing answers"
+    }
+  ];
+
+  const features = user?.role === "Faculty" ? facultyFeatures : studentFeatures;
 
   const studentSteps = [
     {
@@ -242,8 +267,9 @@ export default function Home() {
             <h2 className="text-4xl font-bold text-zinc-100 mb-4">Why Choose Askverse?</h2>
             <div className="w-20 h-1 bg-gradient-to-r from-emerald-500 to-teal-500 mx-auto mb-6"></div>
             <p className="text-zinc-400 max-w-2xl mx-auto leading-relaxed">
-              Students often struggle to get their doubts resolved outside class hours.
-              Askverse bridges this gap by providing a platform where learning never stops.
+              {user?.role === "Faculty"
+                ? "Askverse simplifies academic support, allowing you to guide students efficiently and resolve doubts in one place."
+                : "Students often struggle to get their doubts resolved outside class hours. Askverse bridges this gap by providing a platform where learning never stops."}
             </p>
           </div>
 
