@@ -84,8 +84,8 @@ export default function Home() {
 
   const handleGetStarted = () => {
     if (user) {
-      // If user is logged in, navigate to all questions
-      navigate('/allquestions');
+      // If user is logged in, navigate to faculty directory
+      navigate('/faculty');
     } else {
       // If user is not logged in, open login dialog
       setIsLoginOpen(true);
