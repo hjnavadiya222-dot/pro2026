@@ -70,6 +70,14 @@ export function Navbar() {
               Faculty Directory
             </Link>
           )}
+          {isAuthenticated && user?.role === "Faculty" && (
+            <Link
+              to="/faculty/aboutus"
+              className="text-gray-300 hover:text-white transition duration-200"
+            >
+              About Us
+            </Link>
+          )}
 
           {!isAuthenticated ? (
             <>
@@ -124,14 +132,7 @@ export function Navbar() {
               >
                 Unsolved Questions
               </Link>
-              {user?.role === "Faculty" && (
-                <Link
-                  to="/faculty/aboutus"
-                  className="text-gray-300 hover:text-white transition duration-200"
-                >
-                  About Us
-                </Link>
-              )}
+
             </>
           )}
         </div>
