@@ -34,7 +34,7 @@ const appRouter = createBrowserRouter([
   
   // public/shared directory
   { path: "/faculty", element: <ProtectedRoute allowedRoles={["Student", "Faculty", "Admin"]}><FacultyDirectory /></ProtectedRoute> },
-  { path: "/faculty/aboutus", element: <ProtectedRoute allowedRoles={["Faculty"]}><AboutUs /></ProtectedRoute> },
+  { path: "/aboutus", element: <AboutUs /> },
 
   // student routes
   { path: "/homepage", element: <ProtectedRoute allowedRoles={["Student"]}><UserHome /></ProtectedRoute> },
