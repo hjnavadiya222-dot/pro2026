@@ -1,4 +1,4 @@
-// Backend Server Entry Point
+// Backend Server Entry Point - Shared Atlas DB - Configured
 import express from 'express';
 import dotenv from "dotenv";
 import connectDB from './db.js';
