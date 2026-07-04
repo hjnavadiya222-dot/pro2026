@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { useGetFacultyQuestions } from "@/hooks/useGetFacultyQuestions";
-import { MessageSquare, CheckCircle2, Clock } from "lucide-react";
+import { MessageSquare, CheckCircle2, Clock, Info } from "lucide-react";
 import { Navbar } from "./Navbar";
 
 const cardVariants = {
@@ -53,7 +53,7 @@ export function FacultyHome() {
                 </motion.div>
 
                 {/* Quick Actions */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
                     <motion.div variants={cardVariants} initial="hidden" animate="visible">
                         <Card
                             className="bg-zinc-800/30 border-zinc-700/50 backdrop-blur-sm hover:bg-zinc-800/40 transition-all cursor-pointer"
@@ -105,6 +105,25 @@ export function FacultyHome() {
                                     <div>
                                         <h3 className="text-xl font-semibold text-zinc-100">Pending Questions</h3>
                                         <p className="text-zinc-400">View pending questions</p>
+                                    </div>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    </motion.div>
+
+                    <motion.div variants={cardVariants} initial="hidden" animate="visible" transition={{ delay: 0.3 }}>
+                        <Card
+                            className="bg-zinc-800/30 border-zinc-700/50 backdrop-blur-sm hover:bg-zinc-800/40 transition-all cursor-pointer"
+                            onClick={() => navigate("/aboutus")}
+                        >
+                            <CardContent className="p-6">
+                                <div className="flex items-center gap-4">
+                                    <div className="p-3 rounded-full bg-indigo-500/10 text-indigo-400">
+                                        <Info className="h-6 w-6" />
+                                    </div>
+                                    <div>
+                                        <h3 className="text-xl font-semibold text-zinc-100">About Us</h3>
+                                        <p className="text-zinc-400">Learn about platform</p>
                                     </div>
                                 </div>
                             </CardContent>
