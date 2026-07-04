@@ -62,7 +62,7 @@ export function Navbar() {
           >
             Home
           </Link>
-          {isAuthenticated && user?.role !== "Faculty" && (
+          {user?.role !== "Faculty" && (
             <Link
               to="/faculty"
               className="text-gray-300 hover:text-white transition duration-200"
@@ -70,23 +70,9 @@ export function Navbar() {
               Faculty Directory
             </Link>
           )}
-          {isAuthenticated && user?.role === "Faculty" && (
-            <Link
-              to="/aboutus"
-              className="text-gray-300 hover:text-white transition duration-200"
-            >
-              About Us
-            </Link>
-          )}
 
           {!isAuthenticated ? (
             <>
-              <Link
-                to="/aboutus"
-                className="text-gray-300 hover:text-white transition duration-200"
-              >
-                About Us
-              </Link>
               <Link
                 to="/login"
                 className="text-gray-300 hover:text-white transition duration-200"
@@ -138,7 +124,6 @@ export function Navbar() {
               >
                 Unsolved Questions
               </Link>
-
             </>
           )}
         </div>

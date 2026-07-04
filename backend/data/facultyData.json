@@ -58,13 +58,6 @@
     "email": "bhumika.patel@scet.ac.in"
   },
   {
-    "name": "Prof. Mukesh Patel",
-    "designation": "Assistant Professor",
-    "qualification": "M.E. Computer (Gold Medalist)",
-    "experience": "22 Years",
-    "email": "mukesh.patel@scet.ac.in"
-  },
-  {
     "name": "Prof. (Dr.) Ankit Kharwar",
     "designation": "Assistant Professor",
     "qualification": "Ph.D. (Computer Engineering)",
@@ -147,5 +140,12 @@
     "qualification": "M.Tech Computer Science",
     "experience": "3 Years (Academic)",
     "email": "dhyani.joshi@scet.ac.in"
+  },
+  {
+    "name": "Dr. Mahesh Trivedi",
+    "designation": "Assistant Professor",
+    "qualification": "Ph.D.",
+    "experience": "15 Years",
+    "email": "mahesh.trivedi@scet.ac.in"
   }
 ]

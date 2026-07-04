@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Navbar } from "./Navbar";
+import { toast } from "sonner";
 
 const AskQuestion = () => {
   const { user } = useSelector((state) => state.auth);
@@ -111,7 +112,7 @@ const AskQuestion = () => {
       !formData.questionTitle ||
       !formData.questionText
     ) {
-      alert("Please fill in all required fields.");
+      toast.error("Please fill in all required fields.");
       return;
     }
 
@@ -138,6 +139,7 @@ const AskQuestion = () => {
         }
       );
 
+      toast.success("Question submitted successfully!");
       setFormData({
         subject: "",
         questionTitle: "",
@@ -147,10 +149,9 @@ const AskQuestion = () => {
       setFacultyId(""); // Reset faculty selection
       navigate("/");
     } catch (error) {
-      console.error(
-        "Error adding question",
-        error.response?.data || error.message
-      );
+      const errorMsg = error.response?.data?.message || error.message;
+      console.error("Error adding question", errorMsg);
+      toast.error(errorMsg);
     }
   };
 

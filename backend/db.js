@@ -18,16 +18,18 @@ const seedFaculty = async () => {
     const rawData = fs.readFileSync(filePath, 'utf-8');
     const facultyList = JSON.parse(rawData);
 
-    // Delete any Faculty users in the database that are no longer present in the facultyData.json list
-    const allowedEmails = facultyList.map(fac => fac.email).filter(email => email && email !== "Not Available");
-    const allowedNames = facultyList.map(fac => fac.name);
+    // Get list of allowed emails and names
+    const allowedEmails = facultyList.map(f => f.email).filter(e => e && e !== "Not Available" && e !== "-");
+    const allowedNames = facultyList.map(f => f.name);
+
+    // Remove faculty members from database who are not in the JSON file
     const deleteResult = await User.deleteMany({
       role: "Faculty",
       email: { $nin: allowedEmails },
       fullname: { $nin: allowedNames }
     });
     if (deleteResult.deletedCount > 0) {
-      console.log(`Removed ${deleteResult.deletedCount} outdated faculty records from the database.`);
+      console.log(`Deleted ${deleteResult.deletedCount} obsolete faculty members from database.`);
     }
 
     // Collect all subjects to assign to each faculty member
@@ -51,23 +53,14 @@ const seedFaculty = async () => {
       "Cryptography and Network Security (BTIT13502)",
       "Software Engineering (BTIT14501)",
       "Cloud Computing (BTIT14502)",
-      "Cyber Physical Systems (BTIT14503)",
-      "Information and Communication Technology in Agriculture (BTIT14504)",
-      "Data Science using Python (BTIT15501)",
-      "Programming with Java (BTIT15502)",
       "Data Analysis and Visualization (BTIT13601)",
       "Artificial Intelligence and Applications (BTIT13602)",
       "E-Commerce and E-Business Management (BTIT13603)",
       "Computer Graphics (BTIT14601)",
-      "Mobile Application Development (BTIT14602)",
       "Advanced Web Technology (BTIT14603)",
       "NoSQL Databases (BTIT14604)",
-      "Computer Vision (BTIT14605)",
-      "DotNet Technology (BTIT14606)",
       "Machine Learning Techniques (BTIT14607)",
       "Data Compression (BTIT14608)",
-      "Introduction to Artificial Intelligence (BTIT15601)",
-      "Information Security (BTIT15602)",
       "Research & Innovation (BTMD17608)",
       "Automata Theory and Compiler Design (BTIT13701)",
       "Distributed Systems (BTIT13702)",
@@ -125,6 +118,11 @@ const seedFaculty = async () => {
         if (!existingUser.qualification) { existingUser.qualification = fac.qualification; updated = true; }
         if (!existingUser.experience) { existingUser.experience = fac.experience; updated = true; }
         if (fac.portfolio && !existingUser.portfolio) { existingUser.portfolio = fac.portfolio; updated = true; }
+        
+        // Force update subjects for all faculty members to give everyone all subjects
+        existingUser.subject = subjects;
+        updated = true;
+
         if (updated) {
           await existingUser.save();
           console.log(`Updated faculty fields: ${fac.name}`);

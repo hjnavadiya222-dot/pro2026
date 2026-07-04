@@ -250,8 +250,6 @@ export default function EditProfile() {
                           <option value="Professor">Professor</option>
                           <option value="Associate Professor">Associate Professor</option>
                           <option value="Assistant Professor">Assistant Professor</option>
-                          <option value="Laboratory Assistant">Laboratory Assistant</option>
-                          <option value="Laboratory Attendant">Laboratory Attendant</option>
                         </select>
                       </div>
 

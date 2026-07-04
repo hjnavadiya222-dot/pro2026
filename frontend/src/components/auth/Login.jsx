@@ -37,7 +37,7 @@ export function Login({ isDialog = false, setIsLoginOpen, setIsSignupOpen }) {
   };
 
   const handleSwitchToSignup = () => {
-    if (isDialog && setIsLoginOpen && setIsSignupOpen) {
+    if (isDialog) {
       setIsLoginOpen(false);
       setIsSignupOpen(true);
     } else {
@@ -175,13 +175,7 @@ function LoginForm({ input, handleChange, handleLogin, loading, handleSwitchToSi
         )}
       </Button>
       <div className="text-center text-zinc-400 text-sm">
-        Don't have an account?{" "}
-        <span
-          onClick={handleSwitchToSignup}
-          className="text-emerald-400 hover:text-emerald-300 cursor-pointer transition-colors duration-200"
-        >
-          Sign up
-        </span>
+        Don't have an account? <span onClick={handleSwitchToSignup} className="text-emerald-400 hover:text-emerald-300 cursor-pointer">Sign up</span>
       </div>
     </div>
   );

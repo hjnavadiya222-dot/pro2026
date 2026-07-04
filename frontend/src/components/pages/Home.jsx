@@ -26,7 +26,7 @@ export default function Home() {
   const [isSignupOpen, setIsSignupOpen] = useState(false);
   const { user } = useSelector((state) => state.auth);
 
-  const studentFeatures = [
+  const features = [
     {
       icon: <MessageCircle className="h-6 w-6 text-white" />,
       title: "24/7 Doubt Resolution",
@@ -49,32 +49,7 @@ export default function Home() {
     }
   ];
 
-  const facultyFeatures = [
-    {
-      icon: <MessageCircle className="h-6 w-6 text-white" />,
-      title: "Centralized Doubt Hub",
-      description: "Manage and track all student queries from a single, unified dashboard"
-    },
-    {
-      icon: <Clock className="h-6 w-6 text-white" />,
-      title: "Flexible Responding",
-      description: "Answer students' questions at your own convenience, avoiding office hour rushes"
-    },
-    {
-      icon: <Users className="h-6 w-6 text-white" />,
-      title: "Better Student Connect",
-      description: "Establish closer academic engagement and clarify concepts outside of lectures"
-    },
-    {
-      icon: <CheckCircle className="h-6 w-6 text-white" />,
-      title: "Repetitive Doubt Reduction",
-      description: "Resolve common doubts once so students can learn collectively from existing answers"
-    }
-  ];
-
-  const features = user?.role === "Faculty" ? facultyFeatures : studentFeatures;
-
-  const studentSteps = [
+  const steps = [
     {
       icon: <PenSquare className="h-8 w-8 text-emerald-400" />,
       title: "Login or Create Account",
@@ -107,49 +82,10 @@ export default function Home() {
     }
   ];
 
-  const facultySteps = [
-    {
-      icon: <PenSquare className="h-8 w-8 text-emerald-400" />,
-      title: "Login to Faculty Portal",
-      description: "Sign in to your verified faculty account to manage your doubts"
-    },
-    {
-      icon: <GraduationCap className="h-8 w-8 text-emerald-400" />,
-      title: "Access Dashboard",
-      description: "View overview statistics of your total, solved, and pending doubts"
-    },
-    {
-      icon: <MessageCircle className="h-8 w-8 text-emerald-400" />,
-      title: "Browse Unsolved Doubts",
-      description: "Navigate to the unsolved section to see pending student questions"
-    },
-    {
-      icon: <Clock className="h-8 w-8 text-emerald-400" />,
-      title: "Select a Question",
-      description: "Choose a specific student doubt to view details and descriptions"
-    },
-    {
-      icon: <Send className="h-8 w-8 text-emerald-400" />,
-      title: "Provide a Solution",
-      description: "Write a detailed answer to clear the student's academic doubt"
-    },
-    {
-      icon: <CheckSquare className="h-8 w-8 text-emerald-400" />,
-      title: "Submit & Resolve",
-      description: "Submit the response to mark the doubt as answered and resolved"
-    }
-  ];
-
-  const steps = user?.role === "Faculty" ? facultySteps : studentSteps;
-
   const handleGetStarted = () => {
     if (user) {
-      if (user.role === "Faculty") {
-        navigate('/faculty/unsolved/questions');
-      } else {
-        // If user is a student/other, navigate to faculty directory
-        navigate('/faculty');
-      }
+      // If user is logged in, navigate to all questions
+      navigate('/allquestions');
     } else {
       // If user is not logged in, open login dialog
       setIsLoginOpen(true);
@@ -163,9 +99,6 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen bg-zinc-900">
       <Navbar />
-      {isSignupOpen && (
-        <Signup setIsSignupOpen={setIsSignupOpen} setIsLoginOpen={setIsLoginOpen} />
-      )}
 
       {/* Hero Section */}
       <motion.section
@@ -218,7 +151,7 @@ export default function Home() {
                     </Button>
                   </DialogTrigger>
                   <DialogContent>
-                    <Login isDialog={true} setIsLoginOpen={setIsLoginOpen} setIsSignupOpen={setIsSignupOpen} />
+                    <Login isDialog={true} setIsLoginOpen={setIsLoginOpen} />
                   </DialogContent>
                 </Dialog>
               </div>
@@ -270,9 +203,8 @@ export default function Home() {
             <h2 className="text-4xl font-bold text-zinc-100 mb-4">Why Choose Askverse?</h2>
             <div className="w-20 h-1 bg-gradient-to-r from-emerald-500 to-teal-500 mx-auto mb-6"></div>
             <p className="text-zinc-400 max-w-2xl mx-auto leading-relaxed">
-              {user?.role === "Faculty"
-                ? "Askverse simplifies academic support, allowing you to guide students efficiently and resolve doubts in one place."
-                : "Students often struggle to get their doubts resolved outside class hours. Askverse bridges this gap by providing a platform where learning never stops."}
+              Students often struggle to get their doubts resolved outside class hours.
+              Askverse bridges this gap by providing a platform where learning never stops.
             </p>
           </div>
 
@@ -326,9 +258,7 @@ export default function Home() {
             <h2 className="text-4xl font-bold text-zinc-100 mb-4">How It Works</h2>
             <div className="w-20 h-1 bg-gradient-to-r from-emerald-500 to-teal-500 mx-auto mb-6"></div>
             <p className="text-zinc-400 max-w-2xl mx-auto leading-relaxed">
-              {user?.role === "Faculty" 
-                ? "Resolve student doubts in six simple steps" 
-                : "Get your doubts resolved in six simple steps"}
+              Get your doubts resolved in six simple steps
             </p>
           </div>
 

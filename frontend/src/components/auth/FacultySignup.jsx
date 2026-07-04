@@ -144,8 +144,6 @@ export default function FacultySignup() {
                     <SelectItem value="Professor" className="text-zinc-100">Professor</SelectItem>
                     <SelectItem value="Associate Professor" className="text-zinc-100">Associate Professor</SelectItem>
                     <SelectItem value="Assistant Professor" className="text-zinc-100">Assistant Professor</SelectItem>
-                    <SelectItem value="Laboratory Assistant" className="text-zinc-100">Laboratory Assistant</SelectItem>
-                    <SelectItem value="Laboratory Attendant" className="text-zinc-100">Laboratory Attendant</SelectItem>
                   </SelectContent>
                 </Select>
               </div>

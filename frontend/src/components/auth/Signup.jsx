@@ -39,8 +39,8 @@ export function Signup({ setIsSignupOpen, setIsLoginOpen }) {
       const response = await axios.post("http://localhost:8000/api/v1/user/signup", input, {
         headers: {
           "Content-Type": "application/json",
-        },
-        withCredentials: true
+          withCredentials: true
+        }
       });
 
       if (setIsSignupOpen) {
@@ -159,7 +159,7 @@ export function Signup({ setIsSignupOpen, setIsLoginOpen }) {
 
   if (setIsSignupOpen) {
     return (
-      <Dialog open={true} onOpenChange={(openState) => { if (!openState) setIsSignupOpen(false); }}>
+      <Dialog open={setIsSignupOpen} onOpenChange={setIsSignupOpen}>
         <DialogContent className="sm:max-w-[425px] bg-zinc-900 border border-zinc-800">
           <DialogHeader>
             <DialogTitle className="text-2xl font-bold bg-gradient-to-r from-emerald-400 to-teal-500 bg-clip-text text-transparent">

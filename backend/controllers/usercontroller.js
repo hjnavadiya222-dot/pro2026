@@ -2,8 +2,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { User } from "../models/user.js";
 import dotenv from "dotenv"
-import cloudinary from "../utils/cloudinary.js";
-import getDataUri from "../utils/dataUri.js";
+import { uploadFile, deleteFile } from "../utils/fileUpload.js";
 
 dotenv.config({})
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -146,22 +145,17 @@ export const updateProfile = async (req, res) => {
 
     // Handle Profile Picture Upload
     if (file) {
-      // Convert file buffer to data URIj
-      const fileUri = getDataUri(file);
+      // Upload new profile picture
+      const uploadResult = await uploadFile(file, "profile_pictures");
 
-      // Upload new profile picture to Cloudinary
-      const uploadResult = await cloudinary.uploader.upload(fileUri.content, {
-        folder: "profile_pictures",
-      });
-
-      // Delete old profile picture from Cloudinary if it exists
+      // Delete old profile picture if it exists
       if (user.profile.profilePicture?.public_id) {
-        await cloudinary.uploader.destroy(user.profile.profilePicture.public_id);
+        await deleteFile(user.profile.profilePicture.public_id);
       }
 
       // Update user's profile picture
       user.profile.profilePicture = {
-        url: uploadResult.secure_url,
+        url: uploadResult.url,
         public_id: uploadResult.public_id,
       };
     }
@@ -231,21 +225,11 @@ export const updateProfile = async (req, res) => {
 // Controller to get faculty by subject
 export const getFacultyBySubject = async (req, res) => {
   try {
-    const { subject } = req.query; // Use req.query instead of req.body for query parameters
-
-    // Check if subject is provided
-    if (!subject) {
-      return res.status(400).json({ message: "Subject is required" });
-    }
-
-    // Fetch all faculty members who teach the selected subject
-    const faculty = await User.find({
-      role: "Faculty",
-      subject: { $in: [subject] } // Find faculty who teach the selected subject
-    });
+    // Fetch all faculty members sorted alphabetically by fullname
+    const faculty = await User.find({ role: "Faculty" }).sort({ fullname: 1 });
 
     if (faculty.length === 0) {
-      return res.status(404).json({ message: "No faculty found for this subject" });
+      return res.status(404).json({ message: "No faculty found" });
     }
 
     // Return the list of faculty members as an array
@@ -302,26 +286,17 @@ export const getAllSub = async (req, res) => {
         "Data Mining and Business Intelligence (BTIT13501)",
         "Cryptography and Network Security (BTIT13502)",
         "Software Engineering (BTIT14501)",
-        "Cloud Computing (BTIT14502)",
-        "Cyber Physical Systems (BTIT14503)",
-        "Information and Communication Technology in Agriculture (BTIT14504)",
-        "Data Science using Python (BTIT15501)",
-        "Programming with Java (BTIT15502)"
+        "Cloud Computing (BTIT14502)"
       ],
       6: [
         "Data Analysis and Visualization (BTIT13601)",
         "Artificial Intelligence and Applications (BTIT13602)",
         "E-Commerce and E-Business Management (BTIT13603)",
         "Computer Graphics (BTIT14601)",
-        "Mobile Application Development (BTIT14602)",
         "Advanced Web Technology (BTIT14603)",
         "NoSQL Databases (BTIT14604)",
-        "Computer Vision (BTIT14605)",
-        "DotNet Technology (BTIT14606)",
         "Machine Learning Techniques (BTIT14607)",
         "Data Compression (BTIT14608)",
-        "Introduction to Artificial Intelligence (BTIT15601)",
-        "Information Security (BTIT15602)",
         "Research & Innovation (BTMD17608)"
       ],
       7: [

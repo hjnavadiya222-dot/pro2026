@@ -1,8 +1,7 @@
 // import Question from "../models/question.js"
 import { Question } from "../models/question.js";
 import { User } from "../models/user.js";
-import { v2 as cloudinary } from "cloudinary";
-import getDataUri from "../utils/dataUri.js"; // Utility to convert file buffer to data URI
+import { uploadFile } from "../utils/fileUpload.js";
 
 
 export const askQuestion = async (req, res) => {
@@ -27,18 +26,10 @@ export const askQuestion = async (req, res) => {
 
         let questionFile = null;
         if (req.file) {
-            // Convert file buffer to Data URI
-            const fileUri = getDataUri(req.file);
-
-            // Upload file to Cloudinary
-            const uploadResult = await cloudinary.uploader.upload(fileUri.content, {
-                folder: "question_files",
-                resource_type: "auto", // ✅ Allow any file type
-            });
-
+            const uploadResult = await uploadFile(req.file, "question_files");
             questionFile = {
                 public_id: uploadResult.public_id,
-                url: uploadResult.secure_url,
+                url: uploadResult.url,
             };
         }
 

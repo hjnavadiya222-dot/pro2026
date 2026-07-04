@@ -82,10 +82,6 @@ export default function FacultyDirectory() {
       return searchMatch && des === "Associate Professor";
     } else if (designationFilter === "Assistant Professor") {
       return searchMatch && des.startsWith("Assistant Professor");
-    } else if (designationFilter === "Laboratory Assistant") {
-      return searchMatch && des === "Laboratory Assistant";
-    } else if (designationFilter === "Laboratory Attendant") {
-      return searchMatch && des === "Laboratory Attendant";
     }
 
     return searchMatch;
@@ -178,8 +174,6 @@ export default function FacultyDirectory() {
               <option value="Professor" className="bg-zinc-900">Professor</option>
               <option value="Associate Professor" className="bg-zinc-900">Associate Professor</option>
               <option value="Assistant Professor" className="bg-zinc-900">Assistant Professor</option>
-              <option value="Laboratory Assistant" className="bg-zinc-900">Laboratory Assistant</option>
-              <option value="Laboratory Attendant" className="bg-zinc-900">Laboratory Attendant</option>
             </select>
           </div>
 
