@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
+import dns from 'dns';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -137,6 +138,12 @@ const seedFaculty = async () => {
 
 const connectDB = async () => {
     try {
+        // Set fallback public DNS servers to resolve MongoDB Atlas SRV URIs (bypasses ISP DNS bugs)
+        try {
+            dns.setServers(['8.8.8.8', '1.1.1.1']);
+        } catch (dnsErr) {
+            console.warn("Failed to set DNS servers, proceeding with default resolver:", dnsErr.message);
+        }
         await mongoose.connect(process.env.MONGO_URL);
         console.log("mongodb connected successfully");
         await seedFaculty();
