@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setLoading, setUser } from "@/redux/authSlice";
 import axios from "axios";
 import { toast } from "sonner";
+import { ArrowLeft } from "lucide-react";
 
 export function Login({ isDialog = false, setIsLoginOpen, setIsSignupOpen }) {
   const dispatch = useDispatch();
@@ -118,6 +119,14 @@ export function Login({ isDialog = false, setIsLoginOpen, setIsSignupOpen }) {
             <div className="absolute h-full w-full bg-gradient-to-br from-emerald-500/40 to-teal-500/40" />
           </div>
         </div>
+
+        <button
+          onClick={() => navigate("/")}
+          className="flex items-center gap-2 text-zinc-400 hover:text-zinc-200 transition-colors mb-4 text-sm font-medium focus:outline-none"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          Back to Home
+        </button>
 
         <div className="bg-zinc-800/30 backdrop-blur-sm p-8 rounded-lg border border-zinc-700/50 shadow-xl">
           <div className="text-center mb-8">
