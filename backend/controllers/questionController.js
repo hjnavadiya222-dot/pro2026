@@ -90,6 +90,15 @@ export const answerQuestion = async (req, res) => {
 
         // Update question with answer and mark it as "Answered"
         question.answerText = answerText;
+
+        if (req.file) {
+            const uploadResult = await uploadFile(req.file, "answer_files");
+            question.answerFile = {
+                public_id: uploadResult.public_id,
+                url: uploadResult.url,
+            };
+        }
+
         question.status = "Answered"; // ✅ Update status from "Pending" to "Answered"
         await question.save();
 

@@ -21,7 +21,7 @@ export default function FacultySignup() {
     password: "",
     confirmPassword: "",
     designation: "",
-    department: "Computer Engineering",
+    department: "Information Technologies",
   });
 
   const handleChange = (e) => {
@@ -153,7 +153,7 @@ export default function FacultySignup() {
                 <Input
                   id="department"
                   name="department"
-                  placeholder="Computer Engineering"
+                  placeholder="Information Technologies"
                   value={input.department}
                   onChange={handleChange}
                   className="bg-zinc-800/50 border-zinc-700 text-zinc-100 placeholder:text-zinc-500 focus:border-emerald-500 focus:ring-emerald-500/20"

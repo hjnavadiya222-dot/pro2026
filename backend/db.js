@@ -101,7 +101,7 @@ const seedFaculty = async () => {
           email: dbEmail,
           password: hashedPassword,
           role: "Faculty",
-          department: "Computer Engineering",
+          department: "Information Technologies",
           phoneNumber: "0000000000",
           subject: subjects,
           designation: fac.designation,

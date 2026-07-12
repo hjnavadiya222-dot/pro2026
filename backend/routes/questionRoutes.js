@@ -11,7 +11,7 @@ const router = express.Router();
 // console.log("vinit");
 // Route for asking a question (with file upload)
 router.route("/ask").post(authMiddleware, singleUpload("questionFile"), askQuestion);
-router.route("/answer/:questionId").post(authMiddleware, facultyMiddleware, answerQuestion);
+router.route("/answer/:questionId").post(authMiddleware, facultyMiddleware, singleUpload("answerFile"), answerQuestion);
 router.route("/all").get(getAllQuestions);
 router.route("/:id").get(getQuestionById);
 router.route("/student/:userId").get(authMiddleware, getQuestionsByStudent);

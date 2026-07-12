@@ -32,6 +32,10 @@ const questionSchema = new mongoose.Schema({
     type: String,
     default: null // Initially null, faculty will update it
   },
+  answerFile: {
+    public_id: { type: String },
+    url: { type: String }
+  },
   status: {
     type: String,
     enum: ["Pending", "Answered"],
